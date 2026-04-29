@@ -1,5 +1,5 @@
 # SampleMvvmCompose
-[Android / Kotlin] MVVM / Compose / Retrofit / Hilt / StateFlow / Flow example
+The simpliest example of Android / Kotlin / MVVM / Compose / Retrofit / Hilt / StateFlow / Flow.
 
 [Image1 : User information parsing from Server JSON data]
 
@@ -20,6 +20,6 @@
 9. Flow
                                 
 
-< Additional Infomation >
-GitHub Link : https://github.com/DonggeunJung/SampleMvvmCompose
+< Additional Infomation ><br>
+GitHub Link : https://github.com/DonggeunJung/SampleMvvmCompose<br>
 Any question => Email : topsan72@gmail.com / Author : Donggeun Jung (Dennis)
