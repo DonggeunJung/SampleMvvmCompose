@@ -12,24 +12,24 @@ import com.example.samplemvvmcompose.view.MainViewModel
 
 @Composable
 fun MainScreen(modifier: Modifier = Modifier, viewModel: MainViewModel) {
-    val user = viewModel.user.collectAsStateWithLifecycle()
+    val user = viewModel.userState.collectAsStateWithLifecycle().value.user
 
     ConstraintLayout(modifier = modifier.fillMaxSize().padding(20.dp)) {
         val (topBar, main, bottomBar) = createRefs()
 
-        Text(text=user.value.name, modifier = Modifier.constrainAs(topBar) {
+        Text(text=user.name, modifier = Modifier.constrainAs(topBar) {
             top.linkTo(parent.top)
             start.linkTo(parent.start)
             end.linkTo(parent.end)
         })
 
-        Text(text=user.value.location, modifier = Modifier.constrainAs(main) {
+        Text(text=user.location, modifier = Modifier.constrainAs(main) {
             top.linkTo(topBar.bottom)
             start.linkTo(parent.start)
             bottom.linkTo(bottomBar.top)
         })
 
-        Text(text=user.value.bio, modifier = Modifier.constrainAs(bottomBar) {
+        Text(text=user.bio, modifier = Modifier.constrainAs(bottomBar) {
             top.linkTo(main.bottom)
             start.linkTo(parent.start)
             bottom.linkTo(parent.bottom)

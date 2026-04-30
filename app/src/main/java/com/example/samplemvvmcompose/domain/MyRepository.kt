@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.flowOn
 
 class MyRepository @Inject constructor(private val api: RetrofitApi) {
 
-    fun getUserProfile(): Flow<User> = flow {
+    fun fetchUserProfile(): Flow<User> = flow {
         val user = api.user()
         emit(user)
     }.flowOn(Dispatchers.IO)

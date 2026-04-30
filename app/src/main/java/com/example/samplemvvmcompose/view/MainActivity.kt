@@ -28,6 +28,6 @@ class MainActivity : ComponentActivity() {
             }
         }
 
-        viewModel.reqUserProfile()
+        viewModel.fetchUserProfile()
     }
 }

@@ -14,15 +14,24 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class MainViewModel @Inject constructor (private val repository: MyRepository): ViewModel() {
-    private val _user = MutableStateFlow<User>(User())
-    var user: StateFlow<User> = _user
+    sealed class UserState(val user: User=User()) {
+        object Loading: UserState(User().copy(name="Loading..."))
+        data class Success(val user1: User): UserState(user1)
+        data class Error(val message: String): UserState()
+    }
 
-    fun reqUserProfile() {
+    private val _userState = MutableStateFlow<UserState>(UserState.Loading)
+    val userState: StateFlow<UserState> = _userState
+
+    fun fetchUserProfile() {
+        _userState.value = UserState.Loading
         viewModelScope.launch {
-            repository.getUserProfile()
-                .catch { Log.d("LOG", "Error - repository.getUserProfile()") }
-                .collect { user ->
-                    _user.value = user
+            repository.fetchUserProfile()
+                .catch { exception ->
+                    Log.e("MainViewModel", "Error - MyRepository.fetchUserProfile() : ${exception.message}")
+                    _userState.value = UserState.Error(exception.message.toString())
+                }.collect { user ->
+                    _userState.value = UserState.Success(user)
                 }
         }
     }
