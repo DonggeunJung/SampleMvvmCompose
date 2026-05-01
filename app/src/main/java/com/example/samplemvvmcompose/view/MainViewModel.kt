@@ -14,9 +14,12 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class MainViewModel @Inject constructor (private val repository: MyRepository): ViewModel() {
-
     private val _userState = MutableStateFlow<UserState>(UserState.Loading)
     val userState: StateFlow<UserState> = _userState
+
+    init {
+        fetchUserProfile()
+    }
 
     fun fetchUserProfile() {
         _userState.value = UserState.Loading
