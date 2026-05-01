@@ -12,3 +12,9 @@ data class User(
     val location: String = "",
     val bio: String = ""
 )
+
+sealed class UserState(open val user: User=User()) {
+    object Loading: UserState(User(name="Loading..."))
+    data class Success(override val user: User): UserState()
+    data class Error(val message: String): UserState()
+}

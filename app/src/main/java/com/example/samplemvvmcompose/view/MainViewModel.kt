@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.samplemvvmcompose.domain.MyRepository
-import com.example.samplemvvmcompose.model.User
+import com.example.samplemvvmcompose.model.UserState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,11 +14,6 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class MainViewModel @Inject constructor (private val repository: MyRepository): ViewModel() {
-    sealed class UserState(val user: User=User()) {
-        object Loading: UserState(User().copy(name="Loading..."))
-        data class Success(val user1: User): UserState(user1)
-        data class Error(val message: String): UserState()
-    }
 
     private val _userState = MutableStateFlow<UserState>(UserState.Loading)
     val userState: StateFlow<UserState> = _userState
