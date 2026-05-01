@@ -1,5 +1,6 @@
 package com.example.samplemvvmcompose.domain
 
+import android.util.Log
 import com.example.samplemvvmcompose.model.User
 import com.example.samplemvvmcompose.network.RetrofitApi
 import jakarta.inject.Inject
@@ -30,7 +31,17 @@ class MyRepository @Inject constructor(private val api: RetrofitApi) {
      */
     fun fetchUserProfile(username: String = "DonggeunJung"): Flow<User> = flow {
         require(username.isNotBlank()) { "Username cannot be blank" }
-        val user = api.user(username)
-        emit(user)
+        try {
+            val response = api.fetchUser(username)
+            if(response.isSuccessful) {
+                val user = response.body() ?: User()
+                emit(user)
+            } else {
+                throw Exception("Error fetching user profile: Network error!")
+            }
+        } catch (e: Exception) {
+            Log.e("MyRepository", "Error fetching user profile: ${e.message}")
+            throw Exception("Error fetching user profile: ${e.message}")
+        }
     }.flowOn(Dispatchers.IO)
 }
