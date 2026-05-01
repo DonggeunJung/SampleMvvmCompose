@@ -18,9 +18,6 @@ class MainViewModel @Inject constructor (private val repository: MyRepository): 
     val userState: StateFlow<UserState> = repository.fetchUserProfile()
         .catch { e -> UserState.Error(e.message ?: "Unknown error") }
         .map { user -> UserState.Success(user) }
-        .stateIn(scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000),
-            initialValue = UserState.Loading
-        )
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), UserState.Loading)
 
 }
