@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 
 @HiltViewModel
-class MainViewModel @Inject constructor (private val repository: MyRepository): ViewModel() { //private val _userState = MutableStateFlow<UserState>(UserState.Loading)
+class MainViewModel @Inject constructor (private val repository: MyRepository): ViewModel() {
 
     val userState: StateFlow<UserState> = repository.fetchUserProfile()
         .catch { e -> UserState.Error(e.message ?: "Unknown error") }
